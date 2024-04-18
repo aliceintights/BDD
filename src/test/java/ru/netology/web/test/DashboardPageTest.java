@@ -19,8 +19,10 @@ class DashboardPageTest {
         var dashboardPage = verificationPage.validVerify(verificationCode);
         var firstCardInfo = DataHelper.getFirstCardInfo();
         var secondCardInfo = DataHelper.getSecondCardInfo();
+//        var depositAmount = DataHelper.generateValidAmount(firstCardInfo);
+//        var depositAmount = DataHelper.getFirstCardInfo();
         var moneyTransferPage = dashboardPage.selectCardForMoneyDeposit(firstCardInfo);
-        var makeDepositPage = moneyTransferPage.moneyTransfer("500", secondCardInfo);
+        var makeDepositPage = moneyTransferPage.moneyTransfer("5000", secondCardInfo);
     }
 
     @Test
