@@ -4,6 +4,8 @@ import com.codeborne.selenide.SelenideElement;
 import ru.netology.web.data.DataHelper;
 import ru.netology.web.pages.DashboardPage;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -30,9 +32,7 @@ public class MoneyTransferPage {
         transferConfirmation.click();
     }
 
-    public MoneyTransferPage errorNotification() {
-        transferConfirmation.click();
-        errorNotification.shouldBe(visible).shouldHave(text("Ошибка! Произошла ошибка"));
-        return new MoneyTransferPage();
+    public void errorNotification(String expectedText) {
+        errorNotification.shouldBe(visible, Duration.ofSeconds(15)).shouldHave(text("Ошибка! Произошла ошибка"));
     }
 }

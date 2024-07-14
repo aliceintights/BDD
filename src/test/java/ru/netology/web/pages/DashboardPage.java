@@ -12,6 +12,11 @@ public class DashboardPage {
     private SelenideElement header = $("[data-test-id=dashboard]");
     private SelenideElement depositButton = $("[data-test-id=action-deposit]");
 
+    private final SelenideElement realoadButton = $("[data-test-id=action-reload]");
+    private ElementsCollection cards = $$(".list__item div");
+    private final String balanceStart = "баланс: ";
+    private final String balanceFinish = " р.";
+
     public DashboardPage() {
         header.shouldBe(visible);
     }
@@ -21,9 +26,10 @@ public class DashboardPage {
         return new MoneyTransferPage();
     }
 
-    private ElementsCollection cards = $$(".list__item div");
-    private final String balanceStart = "баланс: ";
-    private final String balanceFinish = " р.";
+    public int getCardBalance(String maskedCardNumber) {
+        var text = cards.findBy(text(maskedCardNumber)).getText();
+        return extactBalance(text);
+    }
 
     public int getCardBalance(int index) {
         var text = cards.get(index).getText();
@@ -33,6 +39,11 @@ public class DashboardPage {
     public MoneyTransferPage selectCardForMoneyDeposit(DataHelper.CardInfo cardInfo) {
         cards.findBy(attribute("data-test-id", cardInfo.getCardID())).$("button").click();
         return new MoneyTransferPage();
+    }
+
+    public void reloadDashboardPage() {
+        realoadButton.click();
+        header.shouldBe(visible);
     }
 
     private int extactBalance(String text) {
